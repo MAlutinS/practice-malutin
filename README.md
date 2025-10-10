@@ -34,5 +34,40 @@
     ```bash
     git push origin develop
     ```
-5. Создание pull request из ветки develop в main
-6. После слияния веток - запуск скрипта обновления
+5. Создание Pull Request для слияния с веткой main
+
+### Скрипты для работы
+
+Изначально нужно перейти в папку dev-config с помощью команды
+    ```bash
+    cd dev-config
+    ```
+
+1. Запуск docker-контейнеров
+    ```bash
+    ./scripts/start.ps1
+    ```
+2. Остановка docker-контейнеров
+    ```bash
+    ./scripts/stop.ps1
+    ```
+3. Создание бэкапов
+    ```bash
+    ./scripts/backup.ps1
+    ```
+4. Восстановление из последнего архива
+    ```bash
+    ./scripts/restore.ps1
+    ```
+5. Обновление кода front & back office, обновление конфигурации БД
+    ```bash
+    ./scripts/update.ps1
+    ```
+6. Вывод логов для указанного сервиса
+    ```bash
+    ./scripts/logs.ps1 <имя_сервиса>
+    ```
+7. Подключение к указанному сервису
+    ```bash
+    ./scripts/console.ps1 <имя_сервиса>
+    ```
