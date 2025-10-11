@@ -16,5 +16,6 @@ Write-Host "Connect to service: $ServiceName" -ForegroundColor Green
 
 switch ($ServiceName) {
     "db" { docker compose exec db psql -U admin backoffice }
+    "pgadmin" { docker compose exec pgadmin sh }  
     default { docker compose exec $ServiceName sh }
 }
