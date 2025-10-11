@@ -17,7 +17,7 @@ if (-not $BackupFile) {
 
 Write-Host "Restore from reserve copy: $BackupFile" -ForegroundColor Green
 
-docker compose drop
+docker compose down
 
 $RestoreDir = "scripts/restore_temp"
 Remove-Item -Path $RestoreDir -Recurse -Force -ErrorAction SilentlyContinue
