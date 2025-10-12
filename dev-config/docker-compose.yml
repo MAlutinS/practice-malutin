@@ -1,23 +1,33 @@
 services:
-  frontoffice:
+  frontoffice-1:
     build: 
       context: ../frontoffice 
       dockerfile: ../dev-config/Dockerfile.frontoffice
-    container_name: astro_frontoffice
-    restart: unless-stopped 
-    ports:
-      - "4321:4321"
+    container_name: astro_frontoffice_1
+    restart: unless-stopped
     volumes:
       - ../frontoffice:/app
       - /app/node_modules
     networks:
       - strapi
-  
-  backoffice:
+
+  frontoffice-2:
+    build: 
+      context: ../frontoffice 
+      dockerfile: ../dev-config/Dockerfile.frontoffice
+    container_name: astro_frontoffice_2
+    restart: unless-stopped
+    volumes:
+      - ../frontoffice:/app
+      - /app/node_modules
+    networks:
+      - strapi
+
+  backoffice-1:
     build:
       context: ../backoffice
       dockerfile: ../dev-config/Dockerfile.backoffice
-    container_name: strapi_backoffice
+    container_name: strapi_backoffice_1
     restart: unless-stopped
     ports:
       - "1337:1337"
@@ -28,30 +38,64 @@ services:
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       DATABASE_USERNAME: ${DATABASE_USERNAME}
       DATABASE_NAME: ${DATABASE_NAME}
-      DATABASE_HOST: ${DATABASE_HOST} 
+      DATABASE_HOST: db-1
       APP_KEYS: ${APP_KEYS}
       API_TOKEN_SALT: ${API_TOKEN_SALT}
       ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
       TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT}
       DATABASE_CLIENT: ${DATABASE_CLIENT}
       NODE_ENV: ${NODE_ENV}
-    depends_on:
-      - db
     networks:
       - strapi
-  
-  db:
-    image: postgres:14.1-alpine
-    container_name: postgres_db
+
+  backoffice-2:
+    build:
+      context: ../backoffice
+      dockerfile: ../dev-config/Dockerfile.backoffice
+    container_name: strapi_backoffice_2
     restart: unless-stopped
-    ports: 
-      - "5432:5432"
+    ports:
+      - "1338:1337"
+    volumes:
+      - ../backoffice:/usr/app
+      - /usr/app/node_modules
+    environment:
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_HOST: db-1
+      APP_KEYS: ${APP_KEYS}
+      API_TOKEN_SALT: ${API_TOKEN_SALT}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT}
+      DATABASE_CLIENT: ${DATABASE_CLIENT}
+      NODE_ENV: ${NODE_ENV}
+    networks:
+      - strapi
+
+  db-1:
+    image: postgres:14.1-alpine
+    container_name: postgres_db_1
+    restart: unless-stopped
     environment:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_DB: ${DATABASE_NAME}
     volumes:
-      - db:/var/lib/postgresql/data
+      - db_1_data:/var/lib/postgresql/data
+    networks:
+      - strapi
+
+  db-2:
+    image: postgres:14.1-alpine
+    container_name: postgres_db_2
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - db_2_data:/var/lib/postgresql/data
     networks:
       - strapi
 
@@ -66,8 +110,6 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     volumes:
       - pgadmin_data:/var/lib/pgadmin
-    depends_on:
-      - db
     networks:
       - strapi
 
@@ -77,12 +119,10 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
+      
       - "1936:1936"
     volumes:
       - ../balancer/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
-    depends_on:
-      - backoffice
-      - frontoffice
     networks:
       - strapi
 
@@ -90,5 +130,6 @@ networks:
   strapi:
 
 volumes:
-  db:
+  db_1_data:
+  db_2_data:
   pgadmin_data:

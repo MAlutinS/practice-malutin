@@ -14,6 +14,20 @@
 - [Postgres](https://www.postgresql.org/) - база данных;
 - [Git](https://git-scm.com/) - система управления версиями.
 
+### Команды для запуска проекта
+
+1. Установка зависимостей для frontoffice
+    ```bash
+    cd frontoffice
+    npm i
+    ```
+
+2. Установка зависимостей для backoffice
+    ```bash
+    cd ../backoffice
+    npm i
+    ```
+
 ### Как доставляется код разработчика
 
 1. Клонирование репозитория:
@@ -39,8 +53,9 @@
 ### Скрипты для работы
 
 Изначально нужно перейти в папку dev-config с помощью команды
+
     ```bash
-    cd dev-config
+    cd practice-malutin/dev-config
     ```
 
 1. Запуск docker-контейнеров
@@ -71,3 +86,20 @@
     ```bash
     ./scripts/console.ps1 <имя_сервиса>
     ```
+### Доступ к сервисам
+
+-- Frontoffice: http://localhost:80
+-- Backoffice (основной): http://localhost:1337
+-- Backoffice (запасной): http://localhost:1338
+-- pgAdmin: http://localhost:8080 email:admin@example.com password:admin123
+-- статистика HAProxy: http://localhost:1936
+
+### База данных
+
+-- PostgreSQL (основная): http://localhost:5432
+-- PostgreSQL (запасная): http://localhost:5433
+
+##### Данные для подлючения
+ - Database: "backoffice"
+ - Username: "admin"
+ - Password: "admin"
