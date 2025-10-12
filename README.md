@@ -88,16 +88,16 @@
     ```
 ### Доступ к сервисам
 
--- Frontoffice: http://localhost:80
--- Backoffice (основной): http://localhost:1337
--- Backoffice (запасной): http://localhost:1338
--- pgAdmin: http://localhost:8080 email:admin@example.com password:admin123
--- статистика HAProxy: http://localhost:1936
+- Frontoffice: http://localhost:80
+- Backoffice (основной): http://localhost:1337
+- Backoffice (запасной): http://localhost:1338
+- pgAdmin: http://localhost:8080 email:admin@example.com password:admin123
+- статистика HAProxy: http://localhost:1936
 
 ### База данных
 
--- PostgreSQL (основная): http://localhost:5432
--- PostgreSQL (запасная): http://localhost:5433
+- PostgreSQL (основная): http://localhost:5432
+- PostgreSQL (запасная): http://localhost:5433
 
 ##### Данные для подлючения
  - Database: "backoffice"
