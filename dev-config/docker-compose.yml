@@ -119,7 +119,6 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
-      
       - "1936:1936"
     volumes:
       - ../balancer/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
